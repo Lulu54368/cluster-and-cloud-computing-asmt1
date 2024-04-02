@@ -23,7 +23,7 @@ def happiest_hour(sentiment_table):
     # remember to add one for each column 
     end_time= time.time()
     logging.info(f"The time taken to calculate the happiest hour is {end_time-start_time} ms")
-    logging.info(f"The happest hour is {hour} with number {sentiment_number}")
+    logging.debug(f"The happest hour is {hour} with number {sentiment_number}")
     return (hour, sentiment_number) 
 def most_active_hour(count_table):
     start_time= time.time()
@@ -32,7 +32,7 @@ def most_active_hour(count_table):
     end_time= time.time()
     # remember to add one for each column 
     logging.info(f"The time taken to calculate the active hour is {end_time-start_time} ms")
-    logging.info(f"The most active day is {hour} with number {count}")
+    logging.debug(f"The most active day is {hour} with number {count}")
     return (hour, count) 
 def happiest_day(sentiment_table):
     start_time = time.time()
@@ -41,7 +41,7 @@ def happiest_day(sentiment_table):
     sentiment_number = sentiment_sum_day[day[0]] [day[1]]
     end_time= time.time()
     logging.info(f"The time taken to calculate the happiest hour is {end_time-start_time} ms")
-    logging.info(f"The happest day is {day} with number {sentiment_number}")
+    logging.debug(f"The happest day is {day} with number {sentiment_number}")
     return day, sentiment_number
     
 
@@ -52,7 +52,7 @@ def most_active_day(count_table):
     count_number = count_sum_day[day[0]] [day[1]]
     end_time= time.time()
     logging.info(f"The time taken to calculate the most active day is {end_time-start_time} ms")
-    logging.info(f"The most active day is {day} with number {count_number}")
+    logging.debug(f"The most active day is {day} with number {count_number}")
     return day, count_number
 
 
