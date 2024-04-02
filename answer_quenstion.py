@@ -2,7 +2,20 @@ from utils import *
 import numpy as np
 import logging
 import time
-
+month_dict = {
+    1: "January",
+    2: "February",
+    3: "March",
+    4: "April",
+    5: "May",
+    6: "June",
+    7: "July",
+    8: "August",
+    9: "September",
+    10: "October",
+    11: "November",
+    12: "December"
+}
 def happiest_hour(sentiment_table):
     start_time = time.time()
     hour = np.unravel_index(np.argmax(sentiment_table), sentiment_table.shape)
@@ -29,6 +42,7 @@ def happiest_day(sentiment_table):
     end_time= time.time()
     logging.info(f"The time taken to calculate the happiest hour is {end_time-start_time} ms")
     logging.info(f"The happest day is {day} with number {sentiment_number}")
+    return day, sentiment_number
     
 
 def most_active_day(count_table):
@@ -39,3 +53,32 @@ def most_active_day(count_table):
     end_time= time.time()
     logging.info(f"The time taken to calculate the most active day is {end_time-start_time} ms")
     logging.info(f"The most active day is {day} with number {count_number}")
+    return day, count_number
+
+
+def print_result(count_table, sentiment_table):
+    print("+++++++++++++++++Q1+++++++++++++++++")
+    date, sentiment_number = happiest_hour(sentiment_table)
+    month = month_dict[int(date[0])+1]
+    day = int(date[1]) + 1
+    hour = date[2]+1
+    print(f"The happiest hour is at {hour:02d}-{hour+1:02d} {day}th of {month} with sentiment number {sentiment_number}")
+    print("+++++++++++++++++Q2+++++++++++++++++")
+
+    date, sentiment_number = happiest_day(sentiment_table)
+    month = month_dict[int(date[0])+1]
+    day = int(date[1]) + 1
+    print(f"The happiest day is on the {day}th of {month} with sentiment number {sentiment_number}")
+    print("+++++++++++++++++Q3+++++++++++++++++")
+    date, count_number = most_active_hour(count_table)
+    month = month_dict[int(date[0])+1]
+    day = int(date[1]) + 1
+    hour = date[2]+1
+    print(f"The happiest hour is at {hour:02d}-{hour+1:02d} {day}th of {month} with tweets number {count_number}")
+    print("+++++++++++++++++Q4+++++++++++++++++")
+    date, count_number = most_active_day(count_table)
+    month = month_dict[int(date[0])+1]
+    day = int(date[1]) + 1
+    print(f"The happiest day is on the {day}th of {month} with tweets number {count_number}")
+    
+
