@@ -41,14 +41,13 @@ def file_reader(file_path, rank, node_number):
     lines = []
     line = file.readline()
     count = 0
-    while line:
+    while line :
        count += 1
        lines.append(line.strip()) 
        line = file.readline()
+    logging.debug(f"finished reading with tot line number {count}")
     lines_per_node = count // node_number
     remainder = count % node_number
-    if(rank == 0):
-        logging.debug(f"The lines for each node is {lines_per_node}")
     if (rank < remainder):
         start_index = rank * (lines_per_node+1)
         end_index = start_index + (lines_per_node + 1)
@@ -56,11 +55,13 @@ def file_reader(file_path, rank, node_number):
         start_index = rank * lines_per_node + remainder
         end_index = start_index + lines_per_node
     node_lines = lines[start_index:end_index]
+    logging.info(f"rank {rank} start {start_index} end {end_index}")
     for row in node_lines:
         count+=1
         datetime= get_datetime(row)
         sentiment =get_sentiment(row)
         sentiment_table[datetime[0]-1][datetime[1]-1][datetime[2]-1] += sentiment
         count_table[datetime[0]-1][datetime[1]-1][datetime[2]-1] += 1 
+    logging.info(f"rank {rank} number in 21, 6 {sum(count_table[5][20][:])}")
     return 
 

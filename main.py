@@ -19,4 +19,4 @@ logging.info(f"The time taken for rank {rank} to process the file is {end_time-s
 hour_sentiment_gathered = comm.reduce(sentiment_table, op=MPI.SUM, root=0)
 hour_count_gather = comm.reduce(count_table, op=MPI.SUM, root=0)
 if rank == 0:
-    print_result(count_table, sentiment_table)
+    print_result(hour_count_gather, hour_sentiment_gathered)
