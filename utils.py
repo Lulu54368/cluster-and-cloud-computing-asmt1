@@ -38,9 +38,15 @@ def get_datetime(line):
 def file_reader(file_path, rank, node_number):
     count = 0
     file = open(file_path, "r")
-    lines = file.readlines()
-    lines_per_node = len(lines) // node_number
-    remainder = len(lines) % node_number
+    lines = []
+    line = file.readline()
+    count = 0
+    while line:
+       count += 1
+       lines.append(line.strip()) 
+       line = file.readline()
+    lines_per_node = count // node_number
+    remainder = count % node_number
     if(rank == 0):
         logging.debug(f"The lines for each node is {lines_per_node}")
     if (rank < remainder):
