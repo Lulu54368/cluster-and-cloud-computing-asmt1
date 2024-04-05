@@ -43,14 +43,13 @@ def file_reader(file_path, rank, node_number):
     count = 0
     try:
         while line:
-            lines.append(line.strip()) 
             line = file.readline()
             if count % node_number == rank: 
-                logging.debug(f"count {count} assigned to {rank}")
                 datetime= get_datetime(line)
                 sentiment =get_sentiment(line)
                 sentiment_table[datetime[0]-1][datetime[1]-1][datetime[2]-1] += sentiment
                 count_table[datetime[0]-1][datetime[1]-1][datetime[2]-1] += 1 
+                logging.debug(f"count is {count}")
             count += 1
         logging.info(f"finished reading with tot line number {count}")
     except:
