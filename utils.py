@@ -40,6 +40,7 @@ def file_reader(file_path, rank, node_number):
     file = open(file_path, "r")
     lines = []
     count = 0
+    line = file.readline()
     try:
         while line:
             line = file.readline()
@@ -51,7 +52,8 @@ def file_reader(file_path, rank, node_number):
                 logging.debug(f"count is {count}")
             count += 1
         logging.info(f"finished reading with tot line number {count}")
-    except:
+    except Exception as e:
+        print(e)
         logging.error(f"Error occurred in line {count}")
     
     return 
