@@ -39,7 +39,6 @@ def file_reader(file_path, rank, node_number):
     count = 0
     file = open(file_path, "r")
     lines = []
-    line = file.readline()
     count = 0
     try:
         while line:
