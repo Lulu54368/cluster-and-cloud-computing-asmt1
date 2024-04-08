@@ -53,8 +53,7 @@ def file_reader(file_path, rank, node_number):
             count += 1
         logging.info(f"finished reading with tot line number {count}")
     except Exception as e:
-        print(e)
-        logging.error(f"Error occurred in line {count}")
+        logging.error(f"Error occurred in line {count}, exception {e}")
     
     return 
 
