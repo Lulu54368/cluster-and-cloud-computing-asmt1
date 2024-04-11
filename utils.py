@@ -11,7 +11,7 @@ count_table = np.zeros(shape)
 sentiment_word = "sentiment"
 date_word = "created_at"
 sentiment_pattern = r'\"{}\"\D*:(-*\d+(\.\d*)*)'.format(re.escape(sentiment_word))
-date_pattern = r'{}\D*(\d+)-(\d+)-(\d+)T(\d+)'.format(re.escape(date_word))  #"created_at":"2021-06-21T18:03:54.000Z",
+date_pattern = r'{}\D*(\d+)-(\d+)-(\d+)T(\d+)'.format(re.escape(date_word)) 
 def get_sentiment(line):
     match = re.search(sentiment_pattern, line)
     if match:
@@ -38,20 +38,32 @@ def get_datetime(line):
 def file_reader(file_path, rank, node_number):
     count = 0
     file = open(file_path, "r")
-    lines = []
     count = 0
+    time_read = 0
+    time_analysis = 0
+    start = time.time()
     line = file.readline()
+    end = time.time()
+    time_read += (end-start)
     try:
         while line:
+            start = time.time()
             line = file.readline()
+            end = time.time()
+            time_read += (end-start)
             if count % node_number == rank: 
+                start = time.time()
                 datetime= get_datetime(line)
                 sentiment =get_sentiment(line)
+                end = time.time()
+                time_analysis += (end-start)
                 sentiment_table[datetime[0]-1][datetime[1]-1][datetime[2]-1] += sentiment
                 count_table[datetime[0]-1][datetime[1]-1][datetime[2]-1] += 1 
                 logging.debug(f"count is {count}")
             count += 1
         logging.info(f"finished reading with tot line number {count}")
+        logging.info(f"Time taken to read data for rank {rank} is {time_read}ms")
+        logging.info(f"Time taken to process the data for {rank} is {time_analysis} ms")
     except Exception as e:
         logging.error(f"Error occurred in line {count}, exception {e}")
     
